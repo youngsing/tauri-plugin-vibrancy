@@ -1,18 +1,33 @@
 # tauri-plugin-vibrancy
- Make your Tao/Tauri windows vibrant.
 
-## Note:
+Make your Tauri/TAO windows vibrant.
 
- This plugin is an experiment to gather enough feedback that will help me
- decide how and whether this will be included in Tao/Tauri directly or kept as a plugin.
+## Platform support
 
-## Usage:
+- **`Windows:`** Yes!
+- **`macOS:`** Yes!
+- **`Linux:`** No, blur effect is controlled by the compositor installed on the user system and they can enable it for your app if they want.
 
-1. Enable transparency on your window
+## Installation
+
+Add it as a dependncy in `Cargo.toml` of your Tao/Tauri project
+```toml
+[dependencies]
+tauri-plugin-vibrancy = { git = "https://github.com/tauri-apps/tauri-plugin-vibrancy", features = ["tauri-impl"] } # or "tao-impl" for TAO projects.
+```
+
+## Cargo Features:
+
+- `tauri-impl`: for Tauri projects.
+- `tao-impl`: for TAO projects.
+
+## Usage
+
+1. Enable transparency on your window:
     - Tauri: Edit your window in `tauri.conf.json > tauri > windows` and add `"transparent": true`
-      or use `tauri::WindowBuilder::transparent`
-    - Tao: Use `tao::window::WindowBuilder::with_transparent`
-2. Use the `Vibrancy` trait methods on your window type
+      or use `tauri::WindowBuilder::transparent`.
+    - TAO: Use `tao::window::WindowBuilder::with_transparent`.
+2. Use the `Vibrancy` trait methods on your window type:
     - Tauri:
         ```rs
         let window = app.get_window("main").unwrap();
@@ -28,7 +43,7 @@
         ```
     - Tao:
         ```rs
-        let window = WindowBuilder::new().with_transparent(true).build().unwrap();
+        let window = WindowBuilder::new().with_transparent(true).build(&event_loop).unwrap();
 
         use tauri_plugin_vibrancy::Vibrancy;
         #[cfg(target_os = "windows")]
@@ -40,14 +55,14 @@
         }
         ```
 
-## Methods:
-> Please read the methods documentation, it has valuable info
-- `apply_blur()` - **`Windows Only`**
-- `apply_acrylic()` - **`Windows Only`**: works only on Windows 10 v1809 and above, it also has bad performance when resizing/dragging the window
-- `apply_vibrancy()` - **`macOS Only`**, thanks to [@youngsing](https://github.com/youngsing)
+## Available methods
 
-## TODOS:
+> Please read the methods documentation in [src/lib.rs](src/lib.rs)
+- `apply_blur()` - **`Windows`**
+- `apply_acrylic()` - **`Windows`** works on Windows 10 v1809 and above and has bad performance when resizing/dragging the window
+- `apply_vibrancy()` - **`macOS`** thanks to [@youngsing](https://github.com/youngsing)
+
+## TODOS
+
 - [ ] `apply_mica()` for Windows 11
 
-## License
-[MIT](./LICENSE) License © 2021 [Amr Bashir](https://github.com/amrbashir)
